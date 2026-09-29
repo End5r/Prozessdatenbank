@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Process } from '../../services/process';
-import { JsonPipe } from '@angular/common';
+//import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [JsonPipe],
+  imports: [],
   selector: 'app-process-table',
   styleUrl: './process-table.css',
   templateUrl: './process-table.html',
