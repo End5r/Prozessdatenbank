@@ -1,34 +1,40 @@
 <!--{{processList()| json}} -->
-<button (click)="onRefreshData()" class="btn-refresh">rndm</button>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th> <!-- column header -->
-      <th>NAME</th>
-      <th>AMOUNT</th>
-      <th>STATUS</th>
+@if (processData.hasValue()){
+  <button (click)="onRefreshData()" class="btn-refresh">rndm</button>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th> <!-- column header -->
+        <th>NAME</th>
+        <th>AMOUNT</th>
+        <th>STATUS</th>
       
-    </tr>
-  </thead>
-  <tbody>
-    @for (process of processList(); track process.id) {
-      <tr>
-        <td>{{ process.id }}</td>   <!-- column value-->
-        <td>{{ process.name}}</td>
-        <td>{{ process.amount}}</td>
-        <td>
-        @if ( process.status == "GOOD") { 
-            <span class = "badge status-good">GOOD</span>
-        }
-        @else if ( process.status == "BAD") {
-             <span class = "badge status-bad">BAD</span>
-            }
-        </td>
       </tr>
-    } @empty {
-      <tr>
-        <td colspan="5">No Data Found.</td>
-      </tr>
-    }
-  </tbody>
+    </thead>
+    <tbody>
+      @for (process of processList(); track process.id) {
+        <tr>
+          <td>{{ process.id }}</td>   <!-- column value-->
+          <td>{{ process.name}}</td>
+          <td>{{ process.amount}}</td>
+          <td>
+          @if ( process.status == "GOOD") { 
+              <span class = "badge status-good">GOOD</span>
+          }
+          @else if ( process.status == "BAD") {
+               <span class = "badge status-bad">BAD</span>
+              }
+          </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5">No Data Found.</td>
+        </tr>
+      }
+    </tbody>
 </table>
+} @else if (processData.error()) {
+  <div> Could not load information</div>
+} @else if (processData.isLoading()) {
+  <div>Loading info...</div>
+}

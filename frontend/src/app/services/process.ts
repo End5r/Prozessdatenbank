@@ -1,5 +1,6 @@
 import { inject, Injectable, signal} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+//import { HttpClient } from '@angular/common/http';
+import { httpResource } from '@angular/common/http';
 import { ProcessData } from '../models/process-data';
 
 @Injectable({
@@ -7,30 +8,28 @@ import { ProcessData } from '../models/process-data';
 })
 export class Process {
 
-    private readonly http = inject(HttpClient);
+    //private readonly http = inject(HttpClient);
     private readonly apiUrl = "http://127.0.0.1:8000/api/processes";
 
-    private readonly processListSignal = signal<ProcessData[]>([]); // empty signal
-    readonly processList = this.processListSignal.asReadonly();
+    private readonly processResource = httpResource<ProcessData[]>(
+        () => this.apiUrl
+    );
 
-    constructor() {
-        this.loadProcesses();
-    }
+    //private readonly processListSignal = signal<ProcessData[]>([]); // #TODO make httpResource for more information (status info)
+    readonly processData = this.processResource
 
-    loadProcesses(): void {
-        this.http.get<ProcessData[]>(this.apiUrl).subscribe({
-            next: (data) => this.processListSignal.set(data),
-            error: (err) => console.error("couldnt load process", err)
-        })
-    }
+    
+
+
 
     updateRandomData(): void {    
-        this.processListSignal.update(processes =>  // "Funktionsaufruf"
+        /*this.processListSignal.update(processes =>  // "Funktionsaufruf"
              processes.map(process => ({
                 ...process,
 
                 amount: +(process.amount + (Math.random() * 4 - 2)).toFixed(1)
              }))
             );
+        */
     }
 }

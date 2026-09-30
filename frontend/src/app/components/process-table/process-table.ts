@@ -11,7 +11,8 @@ import { Process } from '../../services/process';
 export class ProcessTable {
   private readonly processService = inject(Process);
   
-  readonly processList = this.processService.processList;
+  readonly processData = this.processService.processData;
+  readonly processList = this.processService.processData.value;
   
   onRefreshData(): void {
     this.processService.updateRandomData();
