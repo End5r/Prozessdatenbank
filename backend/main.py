@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 app = FastAPI()
+counter = 3
+
+class Process(BaseModel):
+    name: str
+    duration: int
 
 #CORS für Angular Frontend
 app.add_middleware(
@@ -12,9 +17,24 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+processes = [
+        {"id": 1, "name": 'Head', "duration": 1},
+        {"id": 2, "name": 'Wrinkler', "duration": 4}
+    ]
+
 @app.get("/api/processes")
 def getProcesses():
-    return [
-        {"id": 1, "name": 'Temperatur', "amount": 42.5, "timestamp": '2012', "status": 'GOOD'},
-        {"id": 2, "name": 'Wrinkler', "amount": 12, "timestamp": '2018', "status": "BAD"}
-    ]
+    return processes 
+
+@app.post("/api/processes")
+def addProcess(process: Process):
+    process_dict = process.model_dump()
+    giveID(process_dict)
+    processes.append(process_dict)
+    return process_dict
+
+
+def giveID(dictionary: dict):
+    counter += 1
+    dictionary["id"] = counter
+

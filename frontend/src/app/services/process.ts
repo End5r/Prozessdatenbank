@@ -18,11 +18,8 @@ export class Process {
     //private readonly processListSignal = signal<ProcessData[]>([]); // #TODO make httpResource for more information (status info)
     readonly processData = this.processResource
 
-    
-
-
-
     updateRandomData(): void {    
+        this.processResource.reload()
         /*this.processListSignal.update(processes =>  // "Funktionsaufruf"
              processes.map(process => ({
                 ...process,

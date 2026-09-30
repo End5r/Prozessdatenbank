@@ -1,14 +1,12 @@
 <!--{{processList()| json}} -->
 @if (processData.hasValue()){
-  <button (click)="onRefreshData()" class="btn-refresh">rndm</button>
+  <button (click)="onRefreshData()" class="btn-refresh">rfrsh</button>
   <table>
     <thead>
       <tr>
         <th>ID</th> <!-- column header -->
         <th>NAME</th>
-        <th>AMOUNT</th>
-        <th>STATUS</th>
-      
+        <th>DURATION</th>
       </tr>
     </thead>
     <tbody>
@@ -16,15 +14,7 @@
         <tr>
           <td>{{ process.id }}</td>   <!-- column value-->
           <td>{{ process.name}}</td>
-          <td>{{ process.amount}}</td>
-          <td>
-          @if ( process.status == "GOOD") { 
-              <span class = "badge status-good">GOOD</span>
-          }
-          @else if ( process.status == "BAD") {
-               <span class = "badge status-bad">BAD</span>
-              }
-          </td>
+          <td>{{ process.duration}} hours</td>
         </tr>
       } @empty {
         <tr>
