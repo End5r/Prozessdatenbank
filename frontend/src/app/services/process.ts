@@ -1,7 +1,7 @@
 import { inject, Injectable, signal} from '@angular/core';
 //import { HttpClient } from '@angular/common/http';
 import { httpResource } from '@angular/common/http';
-import { ProcessData } from '../models/process-data';
+import { ProcessListZod } from '../models/process-data';
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +11,11 @@ export class Process {
     //private readonly http = inject(HttpClient);
     private readonly apiUrl = "http://127.0.0.1:8000/api/processes";
 
-    private readonly processResource = httpResource<ProcessData[]>(
-        () => this.apiUrl
+    private readonly processResource = httpResource(
+        () => this.apiUrl,
+        { parse: (data) => ProcessListZod.parse(data), }
     );
 
-    //private readonly processListSignal = signal<ProcessData[]>([]); // #TODO make httpResource for more information (status info)
     readonly processData = this.processResource
 
     updateRandomData(): void {    
