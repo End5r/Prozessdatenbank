@@ -3,7 +3,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 app = FastAPI()
-counter = 3
 
 class Process(BaseModel):
     name: str
@@ -29,12 +28,8 @@ def getProcesses():
 @app.post("/api/processes")
 def addProcess(process: Process):
     process_dict = process.model_dump()
-    giveID(process_dict)
+    process_dict["id"] = 1  #TODO needs to be optimized
     processes.append(process_dict)
     return process_dict
 
-
-def giveID(dictionary: dict):
-    counter += 1
-    dictionary["id"] = counter
 

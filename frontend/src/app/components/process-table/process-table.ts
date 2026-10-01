@@ -14,7 +14,4 @@ export class ProcessTable {
   readonly processData = this.processService.processData;
   readonly processList = this.processService.processData.value;
   
-  onRefreshData(): void {
-    this.processService.updateRandomData();
-  }
 }
