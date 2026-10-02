@@ -1,0 +1,20 @@
+@startuml diagram
+
+entity "Prozess" {
+  * process_id
+  --
+  name
+  amount
+}
+
+entity "ProzessSchritte" {
+  * id
+  --
+  * process_id
+  name
+  duration
+}
+
+Prozess "1" --> "n" ProzessSchritte
+
+@enduml
