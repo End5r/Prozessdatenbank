@@ -1,45 +1,24 @@
-# Process Dashboard
+# Produktionsdatenbank
 
-A simple Angular Single Page Application that fetches process data from an API and displays it.
+Eine Webanwendung zur Darstellung von Produktionsprozessen und -zeiten
 
-## Requirements
+## Einführung & Erste Schritte
+Um die Webanwendung nutzen zu können, müssen Sie jeweils das Backend starten sowie das Frontend. Nachdem Sie beides gestartet haben, können Sie die Applikation auf der Frontend-URL nutzen.
 
-The following tools are necessary so the program can start:
-
-* **Node.js** (https://nodejs.org/en/download/current): LTS version
-* **npm**: Is downloaded automatically with Node.js
-* **Angular CLI**: Needs to be installed globally on your system
-
-```bash
-npm install -g @angular/cli
-```
-
-## Installation & Setup
-
-1. Clone the repository:
+1. Repository klonen
    ```bash
    git clone <repository-url>
-   cd prozess-app
+   cd <folder-name>
    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+2. Folgen Sie den Installationsanleitungen der einzelnen Module (siehe Abschnitt **Struktur**)
 
-3. Start the development server:
-   ```bash
-   ng serve
-   ```
+## Struktur
+* [Backend (FastAPI)](./backend/README.md) - RESTAPI für Prozesse und Zeiten
+* [Frontend (Angular)](./frontend/README.md) - Benutzeroberfläche zur Erfassung
 
-4. Open your browser at:
-   ```
-   http://localhost:4200
-   ```
+## Voraussetzungen 
+* **Python 3.12+** & [`uv`](https://docs.astral.sh/uv/)
+* **Node.js 24** (LTS version) & `npm` 
 
-The app will automatically reload if you change any of the source files.
 
-## Notes
-
-* This project currently runs locally only (macOS).
-* Backend/API connection: TBD.
