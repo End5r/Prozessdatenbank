@@ -18,18 +18,6 @@ export class Process {
 
     readonly processData = this.processResource
 
-    updateRandomData(): void {    
-        this.processResource.reload()
-        /*this.processListSignal.update(processes =>  // "Funktionsaufruf"
-             processes.map(process => ({
-                ...process,
-
-                amount: +(process.amount + (Math.random() * 4 - 2)).toFixed(1)
-             }))
-            );
-        */
-    }
-
     createProcess(newProcess: ProcessCreate) {
         const validData = ProcessCreateSchema.parse(newProcess)
         
