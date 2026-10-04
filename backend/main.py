@@ -32,4 +32,3 @@ def addProcess(process: Process):
     processes.append(process_dict)
     return process_dict
 
-
