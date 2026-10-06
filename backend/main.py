@@ -86,7 +86,7 @@ def add_orders(orders_in: OrdersCreate, db : Session = Depends(get_db)):
 
 @app.get("/orders", response_model=list[OrdersOut])
 def get_orders(db: Session = Depends(get_db)):
-    output = db.query(OrdersOut).all()
+    output = db.query(Orders).all()
     return output
 
 @app.get("/evaluation")

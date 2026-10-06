@@ -1,7 +1,7 @@
 import { inject, Injectable, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { httpResource } from '@angular/common/http';
-import { ProcessCreate, ProcessList, ProcessStepCreate, ProcessStepList, ProcessStepType, ProcessType} from '../models/process-schema';
+import {ProcessCreate, ProcessList, ProcessStepCreate, ProcessStepList, ProcessStepType, ProcessType} from '../models/process-schema';
 
 @Injectable({
     providedIn: 'root'
@@ -43,5 +43,5 @@ export class Process {
                 this.processResource.reload()
             }
         })
-    }
+    }    
 }

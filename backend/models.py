@@ -25,6 +25,7 @@ class Process(Base):
 
 
 class Orders(Base):
+    __tablename__ = "orders"
     id = Column(Integer, primary_key=True, nullable=False)
     ordered_amount = Column(Integer, nullable=False)
     sold_amount = Column(Integer, nullable=False)
