@@ -22,3 +22,12 @@ class ProcessStepOut(ProcessStepCreate):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
+
+class OrdersCreate(BaseModel):
+    ordered_amount: int
+    sold_amount: int
+
+class OrdersOut(OrdersCreate):
+    id: int
+
+    model_config = ConfigDict(from_attributes=True)
