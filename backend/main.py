@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+import models
 from database import get_db
 from models import Process, ProcessStep
 from schemas import ProcessCreate, ProcessOut, ProcessStepCreate, ProcessStepOut
@@ -34,6 +35,14 @@ def add_process_step(process_step_in: ProcessStepCreate, db: Session = Depends(g
 
     return object
 
+# TODO Also needs to be connected with frontend
+@app.delete("process/step/{process_step_id}")
+def delete_process_step(process_step_id: int, db:Session = Depends(get_db)):
+    process_step = db.query(models.ProcessStep).filter(models.ProcessStep.id == process_step_id).first()
+
+    db.delete(process_step)
+    db.commit()
+
 @app.get("/process", response_model=list[ProcessOut])
 def get_process(db: Session = Depends(get_db)):
     output = db.query(Process).all()
@@ -48,5 +57,18 @@ def add_process(process_in: ProcessCreate, db: Session = Depends(get_db)):
     db.add(object)
     db.commit()
     db.refresh(object)
-
     return object
+
+
+# TODO Also needs to be connected with frontend
+@app.delete("process/{process_id}")
+def delete_process(process_id: int, db:Session = Depends(get_db)):
+    process = db.query(models.Process).filter(models.Process.id == process_id).first()
+
+    db.delete(process)
+    db.commit()
+    
+# TODO
+@app.patch("process/{process_id}")
+def update_process(process_id: int, db: Session = Depends(get_db)):
+    pass
