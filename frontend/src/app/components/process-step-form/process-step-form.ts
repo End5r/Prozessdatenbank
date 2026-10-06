@@ -4,30 +4,30 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ProcessCreate } from '../../models/process-schema';
 import { Process } from '../../services/process';
+import { ProcessStepCreate } from '../../models/process-schema';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @Component({
-  imports: [MatCardModule, MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
-  selector: 'app-process-form',
-  styleUrl: './process-form.css',
-  templateUrl: './process-form.html',
+  imports: [MatCardModule, MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatCheckboxModule],
+  selector: 'app-process-step-form',
+  styleUrl: './process-step-form.css',
+  templateUrl: './process-step-form.html',
 })
-export class ProcessForm {
-  private readonly formbuilder = inject(FormBuilder);
+export class ProcessStepForm {
+    private readonly formbuilder = inject(FormBuilder);
   private readonly processService = inject(Process);
 
   readonly form = this.formbuilder.nonNullable.group({
-    duration: [0, [Validators.min(1)]],
-    amount: [0, [Validators.min(1)]],
-    step_id: [0, [Validators.min(1)]]
+    step_order: [0, [Validators.min(1)]],
+    is_last: [false],
   });
 
   onSubmit() {
-    const result = ProcessCreate.safeParse(this.form.getRawValue());
+    const result = ProcessStepCreate.safeParse(this.form.getRawValue());
     if (result.success) {
-      this.processService.createProcess(result.data);
+      this.processService.createProcessStep(result.data);
       this.form.reset();
     } else {
         console.error('error occured', result.error)

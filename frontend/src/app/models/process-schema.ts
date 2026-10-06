@@ -1,12 +1,27 @@
 import {z} from "zod";
-
-export const ProcessSchema = z.object({
+//Models for Output
+export const ProcessStep = z.object({
     id: z.number(),
-    name: z.string(),
-    duration: z.number()
-});
+    step_order: z.number(),
+    is_last: z.boolean(),
+})
 
-export const ProcessListZod = z.array(ProcessSchema)
+export const Process = z.object({
+    id: z.number(),
+    amount: z.number(),
+    duration: z.number(),
+    step_id: z.number(),
+    created_at: z.string()
+})
 
-export const ProcessCreateSchema = ProcessSchema.omit({id: true});
-export type ProcessCreate = z.infer<typeof ProcessCreateSchema>;
+//Lists for HTML 
+export const ProcessList = z.array(Process)
+export const ProcessStepList = z.array(ProcessStep)
+
+
+// Models for Input
+export const ProcessStepCreate = ProcessStep.omit({id: true})
+export const ProcessCreate = Process.omit({id: true, created_at:true})
+
+export type ProcessType = z.infer<typeof ProcessCreate>
+export type ProcessStepType = z.infer<typeof ProcessStepCreate>

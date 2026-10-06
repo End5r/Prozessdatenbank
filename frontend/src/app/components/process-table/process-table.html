@@ -4,16 +4,21 @@
     <thead>
       <tr>
         <th>ID</th> <!-- column header -->
-        <th>NAME</th>
+        <th>AMOUNT</th>
         <th>DURATION</th>
+        <th>STEP_ID</th>
+        <th>CREATED_AT</th>
+
       </tr>
     </thead>
     <tbody>
       @for (process of processList(); track process.id) {
         <tr>
           <td>{{ process.id }}</td>   <!-- column value-->
-          <td>{{ process.name}}</td>
+          <td>{{ process.amount}}</td>
           <td>{{ process.duration}} hours</td>
+          <td>{{ process.step_id}}</td>
+          <td>{{ process.created_at}}</td>
         </tr>
       } @empty {
         <tr>

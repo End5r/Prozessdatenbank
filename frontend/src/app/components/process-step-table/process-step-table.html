@@ -1,0 +1,29 @@
+<!--{{processList()| json}} -->
+@if (processStepData.hasValue()){
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th> <!-- column header -->
+        <th>STEP_ORDER</th>
+        <th>IS_LAST</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (process of processStepList(); track process.id) {
+        <tr>
+          <td>{{ process.id }}</td>   <!-- column value-->
+          <td>{{ process.step_order}}</td>
+          <td>{{ process.is_last}} </td>
+        </tr>
+      } @empty {
+        <tr>
+          <td colspan="5">No Data Found.</td>
+        </tr>
+      }
+    </tbody>
+</table>
+} @else if (processStepData.error()) {
+  <div> Could not load information</div>
+} @else if (processStepData.isLoading()) {
+  <div>Loading info...</div>
+}

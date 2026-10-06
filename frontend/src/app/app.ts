@@ -1,8 +1,10 @@
 import { Component, signal } from '@angular/core';
 import { ProcessTable } from './components/process-table/process-table';
 import { ProcessForm } from './components/process-form/process-form';
+import { ProcessStepForm } from './components/process-step-form/process-step-form';
+import { ProcessStepTable } from './components/process-step-table/process-step-table';
 @Component({
-  imports: [ProcessTable, ProcessForm],
+  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
