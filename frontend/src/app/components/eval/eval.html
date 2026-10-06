@@ -1,0 +1,30 @@
+@if (evaluationData.hasValue()){
+  <div class="kpi-row">
+    <mat-card>
+      <mat-card-content>
+        <div class="kpi-value">{{ evaluationValue()?.produced }}</div>
+        <div class="kpi-label">Produced</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="kpi-value">{{ evaluationValue()?.ordered }}</div>
+        <div class="kpi-label">Ordered</div>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <div class="kpi-value">{{ evaluationValue()?.sold }}</div>
+        <div class="kpi-label">Sold</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}
+@else if (evaluationData.isLoading()){
+    <div>Data is Loading ...</div>
+} 
+@else if (evaluationData.error()){
+    <div>Error occured</div>
+}
