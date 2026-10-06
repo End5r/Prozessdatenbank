@@ -1,6 +1,7 @@
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 import models
 from database import get_db
 from models import Orders, Process, ProcessStep
@@ -87,3 +88,9 @@ def add_orders(orders_in: OrdersCreate, db : Session = Depends(get_db)):
 def get_orders(db: Session = Depends(get_db)):
     output = db.query(OrdersOut).all()
     return output
+
+@app.get("/evaluation")
+def get_evualuation(db: Session = Depends(get_db)):
+    produced = db.query(func.sum(Process.amount)).join(
+        ProcessStep).where(ProcessStep.is_last == True).scalar()
+    return produced
