@@ -31,3 +31,8 @@ class OrdersOut(OrdersCreate):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
+
+class EvulationSummary(BaseModel):
+    produced: int
+    ordered: int
+    sold: int
