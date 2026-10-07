@@ -28,5 +28,5 @@ class Orders(Base):
     __tablename__ = "orders"
     id = Column(Integer, primary_key=True, nullable=False)
     ordered_amount = Column(Integer, nullable=False)
-    sold_amount = Column(Integer, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
     

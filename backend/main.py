@@ -95,10 +95,8 @@ def get_evualuation(db: Session = Depends(get_db)):
         ProcessStep).where(ProcessStep.is_last == True).scalar()
 
     ordered = db.query(func.sum(Orders.ordered_amount)).scalar()
-    sold = db.query(func.sum(Orders.sold_amount)).scalar()
 
     return {
         "produced": produced or 0,
-        "ordered": ordered or 0,
-        "sold": sold or 0
+        "ordered": ordered or 0
     }

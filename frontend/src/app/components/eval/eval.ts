@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Orders } from '../../services/orders';
 import { MatCard, MatCardContent } from '@angular/material/card';
 
@@ -13,4 +13,10 @@ export class Eval {
 
   readonly evaluationData = this.ordersService.evalData;
   readonly evaluationValue = this.ordersService.evalData.value;
+
+  readonly needsToBeProduced = computed( () => {
+    const value = this.evaluationValue();
+    if (!value) return 0;
+    return Math.max(0,value.ordered - value.produced);
+  });
 }
