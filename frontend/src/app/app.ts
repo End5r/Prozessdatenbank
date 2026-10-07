@@ -3,8 +3,10 @@ import { ProcessTable } from './components/process-table/process-table';
 import { ProcessForm } from './components/process-form/process-form';
 import { ProcessStepForm } from './components/process-step-form/process-step-form';
 import { ProcessStepTable } from './components/process-step-table/process-step-table';
+import { OrdersForm } from './components/orders/orders-form/orders-form';
+import { Eval } from './components/eval/eval';
 @Component({
-  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable],
+  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable, OrdersForm, Eval],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
