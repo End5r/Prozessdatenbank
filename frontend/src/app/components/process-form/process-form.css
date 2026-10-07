@@ -1,0 +1,50 @@
+.form-container {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  width: 100%;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 900px; 
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: none;
+  box-sizing: border-box;
+
+  mat-card-header {
+    margin-bottom: 1.25rem;
+    padding: 0;
+  }
+
+  mat-card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
+}
+
+
+.process-inline-form {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  width: 100%;
+
+  mat-form-field {
+    flex: 1; 
+    min-width: 0;
+  }
+
+  .submit-btn {
+    height: 56px;
+    padding: 0 1.5rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}

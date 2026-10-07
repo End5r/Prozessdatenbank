@@ -18,7 +18,7 @@ export class OrdersForm {
   private readonly ordersService = inject(Orders)
 
   readonly form = this.formbuilder.nonNullable.group({
-    ordered_amount: [0, Validators.min(0)]
+    ordered_amount: [0, Validators.min(1)]
   })
 
     onSubmit() {

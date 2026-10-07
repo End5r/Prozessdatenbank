@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Process } from '../../services/process';
+import { MatCardContent, MatCard, MatCardHeader, MatCardTitle } from '@angular/material/card';
 
 @Component({
-  imports: [],
+  imports: [MatCardContent, MatCard, MatCardHeader, MatCardTitle],
   selector: 'app-process-step-table',
   styleUrl: './process-step-table.css',
   templateUrl: './process-step-table.html',

@@ -1,6 +1,31 @@
-<app-process-form></app-process-form>
-<app-process-table></app-process-table>
-<app-process-step-form></app-process-step-form>
-<app-process-step-table></app-process-step-table>
-<app-orders-form></app-orders-form>
-<app-eval></app-eval>
+<div class="dashboard-container">
+  <mat-card class="tabs-card">
+    <mat-tab-group animationDuration="0ms">
+      
+      <!-- Tab 1: Process -->
+      <mat-tab label="Process">
+        <div class="tab-content">
+          <app-process-form></app-process-form>
+          <app-process-table></app-process-table>
+        </div>
+      </mat-tab>
+
+      <!-- Tab 2: Steps -->
+      <mat-tab label="Steps">
+        <div class="tab-content">
+          <app-process-step-form></app-process-step-form>
+          <app-process-step-table></app-process-step-table>
+        </div>
+      </mat-tab>
+
+      <!-- Tab 3: Overview -->
+      <mat-tab label="Overview">
+        <div class="tab-content">
+          <app-orders-form></app-orders-form>
+          <app-eval></app-eval>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card>
+</div>

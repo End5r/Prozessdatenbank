@@ -1,29 +1,50 @@
-<!--{{processList()| json}} -->
-@if (processStepData.hasValue()){
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th> <!-- column header -->
-        <th>STEP_ORDER</th>
-        <th>IS_LAST</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (process of processStepList(); track process.id) {
-        <tr>
-          <td>{{ process.id }}</td>   <!-- column value-->
-          <td>{{ process.step_order}}</td>
-          <td>{{ process.is_last}} </td>
-        </tr>
-      } @empty {
-        <tr>
-          <td colspan="5">No Data Found.</td>
-        </tr>
-      }
-    </tbody>
-</table>
-} @else if (processStepData.error()) {
-  <div> Could not load information</div>
-} @else if (processStepData.isLoading()) {
-  <div>Loading info...</div>
-}
+<mat-card class="table-card">
+  <mat-card-header>
+    <mat-card-title>Definierte Fertigungsschritte</mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    @if (processStepData.hasValue()) {
+      <div class="table-container">
+        <table class="clean-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Reihenfolge (Order)</th>
+              <th>Letzter Schritt?</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (process of processStepList(); track process.id) {
+              <tr>
+                <td class="font-mono">{{ process.id }}</td>
+                <td>{{ process.step_order }}</td>
+                <td>
+                  @if (process.is_last) {
+                    <span>Ja</span>
+                  } @else {
+                    <span class="text-muted">Nein</span>
+                  }
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="3" class="state-cell empty">
+                  Keine Fertigungsschritte gefunden.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    } @else if (processStepData.error()) {
+      <div class="state-box error">
+        Informationen konnten nicht geladen werden.
+      </div>
+    } @else if (processStepData.isLoading()) {
+      <div class="state-box loading">
+        Daten werden geladen...
+      </div>
+    }
+  </mat-card-content>
+</mat-card>

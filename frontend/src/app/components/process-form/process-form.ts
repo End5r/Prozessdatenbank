@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ProcessCreate } from '../../models/process-schema';
 import { Process } from '../../services/process';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -23,6 +24,7 @@ export class ProcessForm {
     amount: [0, [Validators.min(1)]],
     step_id: [0, [Validators.min(1)]]
   });
+
 
   onSubmit() {
     const result = ProcessCreate.safeParse(this.form.getRawValue());
