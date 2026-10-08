@@ -40,3 +40,8 @@ class EvulationSummary(BaseModel):
 class averageStepOut(BaseModel):
     step_order: int
     average: float
+
+class WeeklySummary(BaseModel):
+    week: date
+    produced: int
+    ordered: int
