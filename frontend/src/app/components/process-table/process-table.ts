@@ -15,5 +15,13 @@ export class ProcessTable {
   
   readonly processData = this.processService.processData;
   readonly processList = this.processService.processData.value;
+
+  getHours(number: number){
+    return (number / 60).toFixed(0)
+  }
+
+  getMinutes(number: number){
+    return (number % 60)
+  }
   
 }

@@ -7,8 +7,9 @@ import { OrdersForm } from './components/orders/orders-form/orders-form';
 import { Eval } from './components/eval/eval';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCard } from '@angular/material/card';
+import { Average } from './components/average/average';
 @Component({
-  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable, OrdersForm, Eval, MatTabsModule, MatCard],
+  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable, OrdersForm, Eval, MatTabsModule, MatCard, Average],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',
