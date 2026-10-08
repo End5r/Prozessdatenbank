@@ -4,6 +4,7 @@ import { httpResource } from '@angular/common/http';
 import {AverageStepList, ProcessCreate, ProcessList, ProcessStepCreate, ProcessStepList, ProcessStepType, ProcessType, WeeklySummaryList} from '../models/process-schema';
 import { Orders } from './orders';
 import { Summary } from './summary';
+import { API_BASE_URL } from '../api.config';
 
 @Injectable({
     providedIn: 'root'
@@ -13,9 +14,9 @@ export class Process {
     private readonly http = inject(HttpClient);
     private readonly orders = inject(Orders)
     private readonly summary = inject(Summary)
-    private readonly apiUrlStep = "http://127.0.0.1:8000/process/step";
-    private readonly apiUrl = "http://127.0.0.1:8000/process";
-    private readonly averageStepUrl = "http://127.0.0.1:8000/step-average";
+    private readonly apiUrlStep = `${API_BASE_URL}/process/step`;
+    private readonly apiUrl = `${API_BASE_URL}/process`;
+    private readonly averageStepUrl = `${API_BASE_URL}/step-average`;
 
     private readonly processStepResource = httpResource(
         () => this.apiUrlStep,
