@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from pydantic import BaseModel, ConfigDict
 
@@ -6,6 +6,7 @@ class ProcessCreate(BaseModel):
     amount: int
     duration: int
     step_id: int
+    produced_at: date
 
 class ProcessStepCreate(BaseModel):
     step_order: int

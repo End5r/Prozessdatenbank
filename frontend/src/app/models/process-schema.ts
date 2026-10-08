@@ -11,7 +11,8 @@ export const Process = z.object({
     amount: z.number(),
     duration: z.number(),
     step_id: z.number(),
-    created_at: z.string()
+    created_at: z.string(),
+    produced_at: z.string()
 })
 
 export const AverageStep = z.object({

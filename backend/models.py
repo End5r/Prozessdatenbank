@@ -1,7 +1,7 @@
 from sqlalchemy.orm import relationship
 
 from database import Base
-from sqlalchemy import Column, Float, ForeignKey, Integer, TIMESTAMP, Boolean, text
+from sqlalchemy import Column, ForeignKey, Integer, TIMESTAMP, Boolean, text, Date, func
 
 class ProcessStep(Base):
     __tablename__ = "process_steps"
@@ -20,6 +20,7 @@ class Process(Base):
     duration = Column(Integer, nullable=False)
     step_id = Column(Integer, ForeignKey("process_steps.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
+    produced_at = Column(Date, server_default=func.current_date(), nullable=False )
 
     step = relationship("ProcessStep", back_populates="processes")
 

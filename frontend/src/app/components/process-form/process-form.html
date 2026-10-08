@@ -30,6 +30,25 @@
           <input matInput type="number" formControlName="minutes" placeholder="1" />
         </mat-form-field>
 
+<mat-form-field appearance="outline" class="date-field">
+  <mat-label>Produktionsdatum</mat-label>
+  
+  <input 
+    matInput 
+    [matDatepicker]="picker" 
+    formControlName="produced_at" 
+    [max]="maxDate"
+    placeholder="TT.MM.JJJJ" 
+  />
+  
+  <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+
+  @if (form.get('produced_at')?.hasError('required')) {
+    <mat-error>Bitte wähle ein Produktionsdatum aus</mat-error>
+  }
+</mat-form-field>        
+
         <!-- Anlegen Button ganz rechts -->
         <button 
           mat-flat-button 

@@ -7,11 +7,18 @@ import { MatInputModule } from '@angular/material/input';
 import { ProcessCreate } from '../../models/process-schema';
 import { Process } from '../../services/process';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, provideNativeDateAdapter } from '@angular/material/core';
 
 
 @Component({
-  imports: [MatCardModule, MatButtonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
+  imports: [MatCardModule, MatButtonModule,
+     ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule],
   selector: 'app-process-form',
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE'}
+  ],
   styleUrl: './process-form.css',
   templateUrl: './process-form.html',
 })
@@ -19,20 +26,27 @@ export class ProcessForm {
   private readonly formbuilder = inject(FormBuilder);
   private readonly processService = inject(Process);
 
+  readonly maxDate = new Date();
+
   readonly form = this.formbuilder.nonNullable.group({
     hours: [0, [Validators.min(0)]],
     minutes: [0, [Validators.min(0)]],
     amount: [0, [Validators.min(1)]],
-    step_id: [0, [Validators.min(1)]]
+    step_id: [0, [Validators.min(1)]],
+    produced_at: [this.maxDate, Validators.required]
   });
 
 
   onSubmit() {
+    const date = this.form.value.produced_at;
+
+
     const data = this.form.getRawValue()
     const data_zod = {
       "duration": (data.hours * 60) + data.minutes,
       "amount": data.amount,
-      "step_id": data.step_id
+      "step_id": data.step_id,
+      "produced_at": date?.toLocaleDateString('sv')
     }
 
     const result = ProcessCreate.safeParse(data_zod);
