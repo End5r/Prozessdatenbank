@@ -39,7 +39,8 @@ export class Process {
 
         this.http.post(this.apiUrlStep, validData).subscribe({
             next: () => {
-                this.processStepResource.reload()
+                this.processStepResource.reload(),
+                this.averageStepRessource.reload()
             }
         })
     }
@@ -49,7 +50,8 @@ export class Process {
 
         this.http.post(this.apiUrl, validData).subscribe({
             next: () => {
-                this.processResource.reload()
+                this.processResource.reload(),
+                this.averageStepRessource.reload(),
                 this.orders.evalData.reload()
             }
         })

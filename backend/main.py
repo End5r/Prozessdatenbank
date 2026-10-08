@@ -89,7 +89,7 @@ def get_average_step_time_per_step(db: Session = Depends(get_db)):
     for step_order, total_duration, total_amount in information:
         average = 0
         if total_amount:
-            average = total_duration / total_amount # Minuten pro Stück
+            average = round((total_duration / total_amount),2) # Minuten pro Stück
         result.append(
             {
                 "step_order": step_order,
