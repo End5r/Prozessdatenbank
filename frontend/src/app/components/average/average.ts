@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Process } from '../../services/process';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 
 @Component({
   imports: [],

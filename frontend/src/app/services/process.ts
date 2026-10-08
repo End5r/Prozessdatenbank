@@ -1,8 +1,9 @@
 import { inject, Injectable, signal} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { httpResource } from '@angular/common/http';
-import {AverageStepList, ProcessCreate, ProcessList, ProcessStepCreate, ProcessStepList, ProcessStepType, ProcessType} from '../models/process-schema';
+import {AverageStepList, ProcessCreate, ProcessList, ProcessStepCreate, ProcessStepList, ProcessStepType, ProcessType, WeeklySummaryList} from '../models/process-schema';
 import { Orders } from './orders';
+import { Summary } from './summary';
 
 @Injectable({
     providedIn: 'root'
@@ -11,6 +12,7 @@ export class Process {
 
     private readonly http = inject(HttpClient);
     private readonly orders = inject(Orders)
+    private readonly summary = inject(Summary)
     private readonly apiUrlStep = "http://127.0.0.1:8000/process/step";
     private readonly apiUrl = "http://127.0.0.1:8000/process";
     private readonly averageStepUrl = "http://127.0.0.1:8000/step-average";
@@ -30,9 +32,9 @@ export class Process {
         { parse: (data) => AverageStepList.parse(data)}
     )
 
-    readonly processStepData = this.processStepResource
-    readonly processData = this.processResource
-    readonly averageStepData = this.averageStepRessource
+    readonly processStepData = this.processStepResource;
+    readonly processData = this.processResource;
+    readonly averageStepData = this.averageStepRessource;
 
     createProcessStep(newProcessStep: ProcessStepType){
         const validData = ProcessStepCreate.parse(newProcessStep)
@@ -53,6 +55,7 @@ export class Process {
                 this.processResource.reload(),
                 this.averageStepRessource.reload(),
                 this.orders.evalData.reload()
+                this.summary.weeklySummaryData.reload()
             }
         })
     }    
