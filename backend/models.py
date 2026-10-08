@@ -17,7 +17,7 @@ class Process(Base):
 
     id = Column(Integer,primary_key=True,nullable=False)
     amount = Column(Integer, nullable=False)
-    duration = Column(Float, nullable=False)
+    duration = Column(Integer, nullable=False)
     step_id = Column(Integer, ForeignKey("process_steps.id", ondelete="CASCADE"), nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
 
