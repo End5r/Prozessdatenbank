@@ -98,8 +98,8 @@ def get_average_step_time_per_step(db: Session = Depends(get_db)):
         )
     return result
 
-@app.get("/adapter_week")
-def weekly_adapter(db : Session = Depends(get_db)):
+
+def weekly_adapter(db : Session):
     week_trunc = func.date_trunc('week', Process.produced_at)
     information = db.query(week_trunc, func.sum(Process.amount)).join(ProcessStep).where(
         ProcessStep.is_last == True).group_by(week_trunc).all()
@@ -114,8 +114,8 @@ def weekly_adapter(db : Session = Depends(get_db)):
         )
     return result
 
-@app.get("/ordered_week")
-def weekly_ordered(db: Session = Depends(get_db)):
+
+def weekly_ordered(db: Session):
     week_trunc = func.date_trunc('week', Orders.created_at)
     information = db.query(week_trunc, func.sum(Orders.ordered_amount)).group_by(week_trunc).all()
 
@@ -130,21 +130,43 @@ def weekly_ordered(db: Session = Depends(get_db)):
         )
     return result
 
+
+def weekly_duration(db : Session):
+    week_trunc = func.date_trunc('week',Process.produced_at)
+    information = db.query(week_trunc, func.sum(Process.duration)).group_by(week_trunc).all()
+
+    result = []
+
+    for week, duration in information:
+        result.append(
+            {
+                "week": week.date(),
+                "duration": duration 
+            }
+        )
+
+    return result
+
 @app.get("/summary_week", response_model=list[WeeklySummary])
 def get_weekly_summary(db : Session = Depends(get_db)):
     adapters = weekly_adapter(db)
     ordered = weekly_ordered(db)
+    durations = weekly_duration(db)
 
     summary = {}
-
+    
     for item in adapters:
-        summary[item["week"]] = {"ordered": 0, "produced": item["total_amount"]}
+        entry = summary.setdefault(item["week"], {"produced": 0, "ordered": 0, "duration": 0})
+        entry["produced"] = item["total_amount"]
 
     for item in ordered:
-        if item["week"] not in summary:
-            summary[item["week"]] = {"ordered": item["total_amount"], "produced": 0}
-        else:
-            summary[item["week"]]["ordered"] = item["total_amount"]
+        entry = summary.setdefault(item["week"], {"produced": 0, "ordered": 0, "duration": 0})
+        entry["ordered"] = item["total_amount"]
+
+    for item in durations:
+        entry = summary.setdefault(item["week"], {"produced": 0, "ordered": 0, "duration": 0})
+        entry["duration"] = item["duration"]
+        
 
     result = []
 
@@ -152,8 +174,8 @@ def get_weekly_summary(db : Session = Depends(get_db)):
         result.append( {
             "week": item,
             "produced": summary[item]["produced"],
-            "ordered": summary[item]["ordered"]
+            "ordered": summary[item]["ordered"],
+            "duration": summary[item]["duration"]
         }
         )
     return result
-    

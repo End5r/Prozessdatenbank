@@ -45,3 +45,4 @@ class WeeklySummary(BaseModel):
     week: date
     produced: int
     ordered: int
+    duration: int
