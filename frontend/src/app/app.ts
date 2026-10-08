@@ -5,8 +5,11 @@ import { ProcessStepForm } from './components/process-step-form/process-step-for
 import { ProcessStepTable } from './components/process-step-table/process-step-table';
 import { OrdersForm } from './components/orders/orders-form/orders-form';
 import { Eval } from './components/eval/eval';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatCard } from '@angular/material/card';
+import { Average } from './components/average/average';
 @Component({
-  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable, OrdersForm, Eval],
+  imports: [ProcessTable, ProcessForm, ProcessStepForm, ProcessStepTable, OrdersForm, Eval, MatTabsModule, MatCard, Average],
   selector: 'app-root',
   styleUrl: './app.css',
   templateUrl: './app.html',

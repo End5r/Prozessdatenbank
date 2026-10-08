@@ -1,11 +1,82 @@
-/* Tabellen Design */
-table {
+.table-card {
   width: 100%;
-  border-collapse: collapse; /* Verhindert doppelte Ränder */
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: none;
+  box-sizing: border-box;
+
+  mat-card-header {
+    margin-bottom: 1.5rem;
+    padding: 0;
+  }
+
+  mat-card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e293b;
+  }
 }
-th, td {
-  padding: 12px 16px;
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.clean-table {
+  width: 100%;
+  border-collapse: collapse;
   text-align: left;
-  vertical-align: middle;
-  border-bottom: 1px solid #ddd;
+
+  th {
+    color: #64748b;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.875rem 1rem;
+    border-bottom: 2px solid #e2e8f0;
+  }
+
+  td {
+    color: #334155;
+    font-size: 0.925rem;
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  tbody tr:hover {
+    background-color: #f8fafc;
+  }
+}
+
+.font-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #64748b;
+}
+
+/* Status & State Layouts */
+.state-cell {
+  padding: 2.5rem 1rem !important;
+  text-align: center;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.state-box {
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border-radius: 6px;
+
+  &.loading {
+    color: #64748b;
+    background-color: #f8fafc;
+  }
+
+  &.error {
+    color: #991b1b;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+  }
 }

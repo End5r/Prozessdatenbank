@@ -6,6 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ProcessCreate } from '../../models/process-schema';
 import { Process } from '../../services/process';
+import { MatSelectModule } from '@angular/material/select';
 
 
 @Component({
@@ -19,13 +20,22 @@ export class ProcessForm {
   private readonly processService = inject(Process);
 
   readonly form = this.formbuilder.nonNullable.group({
-    duration: [0, [Validators.min(1)]],
+    hours: [0, [Validators.min(0)]],
+    minutes: [0, [Validators.min(0)]],
     amount: [0, [Validators.min(1)]],
     step_id: [0, [Validators.min(1)]]
   });
 
+
   onSubmit() {
-    const result = ProcessCreate.safeParse(this.form.getRawValue());
+    const data = this.form.getRawValue()
+    const data_zod = {
+      "duration": (data.hours * 60) + data.minutes,
+      "amount": data.amount,
+      "step_id": data.step_id
+    }
+
+    const result = ProcessCreate.safeParse(data_zod);
     if (result.success) {
       this.processService.createProcess(result.data);
       this.form.reset();

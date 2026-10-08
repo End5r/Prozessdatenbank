@@ -4,7 +4,7 @@ from pydantic import BaseModel, ConfigDict
 
 class ProcessCreate(BaseModel):
     amount: int
-    duration: float
+    duration: int
     step_id: int
 
 class ProcessStepCreate(BaseModel):
@@ -35,3 +35,7 @@ class OrdersOut(OrdersCreate):
 class EvulationSummary(BaseModel):
     produced: int
     ordered: int
+
+class averageStepOut(BaseModel):
+    step_order: int
+    average: float

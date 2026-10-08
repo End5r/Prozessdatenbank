@@ -1,0 +1,32 @@
+@if (averageStepData.hasValue()) {
+  <div class="table-container">
+    <table class="flat-table">
+      <thead>
+        <tr>
+          <th>Schritt</th>
+          <th>Dauer (Min/Stk)</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of averageStepValue(); track item.step_order) {
+          <tr>
+            <td>{{ item.step_order }}</td>
+            <td>{{ item.average }} Min.</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="2" class="empty-state">Keine Schritt-Durchschnitte vorhanden.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+} @else if (averageStepData.error()) {
+  <div class="state-box error">
+    Informationen konnten nicht geladen werden.
+  </div>
+} @else if (averageStepData.isLoading()) {
+  <div class="state-box loading">
+    Daten werden geladen...
+  </div>
+}

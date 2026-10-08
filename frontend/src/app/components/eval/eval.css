@@ -8,18 +8,41 @@ mat-card {
   flex: 1;
   text-align: center;
   padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  box-shadow: none;
 }
 
 .kpi-value {
   font-size: 2.5rem;
   font-weight: 600;
   line-height: 1.2;
+  color: #1e293b;
 }
 
 .kpi-label {
   font-size: 0.85rem;
-  color: #666;
+  color: #64748b;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-top: 0.25rem;
+}
+
+.state-box {
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  margin: 1rem 0;
+
+  &.loading {
+    color: #64748b;
+    background-color: #f8fafc;
+  }
+
+  &.error {
+    color: #991b1b;
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+  }
 }

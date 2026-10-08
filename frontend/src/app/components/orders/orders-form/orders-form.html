@@ -1,10 +1,30 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <mat-label>ordered_amount</mat-label>
-    <input matInput type="number" formControlName="ordered_amount" />
-  </mat-form-field>
+<div class="form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>Auftrag erfassen</mat-card-title>
+    </mat-card-header>
 
-  <button mat-flat-button type="submit" [disabled]="form.invalid">
-    submit
-  </button>
-</form>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="orders-inline-form">
+        
+        <!-- Auftragsmenge -->
+        <mat-form-field appearance="outline">
+          <mat-label>Bestellmenge (ordered_amount)</mat-label>
+          <input matInput type="number" formControlName="ordered_amount" placeholder="z. B. 500" />
+        </mat-form-field>
+
+        <!-- Anlegen Button rechts -->
+        <button 
+          mat-flat-button 
+          color="primary" 
+          type="submit" 
+          [disabled]="form.invalid"
+          class="submit-btn"
+        >
+          Anlegen
+        </button>
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

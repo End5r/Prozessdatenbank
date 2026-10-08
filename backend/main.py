@@ -5,7 +5,7 @@ from sqlalchemy import func
 import models
 from database import get_db
 from models import Orders, Process, ProcessStep
-from schemas import OrdersCreate, OrdersOut, ProcessCreate, ProcessOut, ProcessStepCreate, ProcessStepOut
+from schemas import OrdersCreate, OrdersOut, ProcessCreate, ProcessOut, ProcessStepCreate, ProcessStepOut, averageStepOut
 
 app = FastAPI()
 
@@ -36,13 +36,6 @@ def add_process_step(process_step_in: ProcessStepCreate, db: Session = Depends(g
 
     return object
 
-# TODO Also needs to be connected with frontend
-@app.delete("/process/step/{process_step_id}")
-def delete_process_step(process_step_id: int, db:Session = Depends(get_db)):
-    process_step = db.query(models.ProcessStep).filter(models.ProcessStep.id == process_step_id).first()
-
-    db.delete(process_step)
-    db.commit()
 
 @app.get("/process", response_model=list[ProcessOut])
 def get_process(db: Session = Depends(get_db)):
@@ -59,20 +52,6 @@ def add_process(process_in: ProcessCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(object)
     return object
-
-
-# TODO Also needs to be connected with frontend
-@app.delete("/process/{process_id}")
-def delete_process(process_id: int, db:Session = Depends(get_db)):
-    process = db.query(models.Process).filter(models.Process.id == process_id).first()
-
-    db.delete(process)
-    db.commit()
-    
-# TODO
-@app.patch("/process/{process_id}")
-def update_process(process_id: int, db: Session = Depends(get_db)):
-    pass
 
 @app.post("/orders", response_model=OrdersOut)
 def add_orders(orders_in: OrdersCreate, db : Session = Depends(get_db)):
@@ -100,3 +79,21 @@ def get_evualuation(db: Session = Depends(get_db)):
         "produced": produced or 0,
         "ordered": ordered or 0
     }
+
+@app.get("/step-average", response_model= list[averageStepOut])
+def get_average_step_time_per_step(db: Session = Depends(get_db)):
+    information = db.query(ProcessStep.step_order, 
+                       func.sum(Process.duration), func.sum(Process.amount)).outerjoin(
+                           Process).group_by(ProcessStep.step_order).order_by(ProcessStep.step_order).all()
+    result = []
+    for step_order, total_duration, total_amount in information:
+        average = 0
+        if total_amount:
+            average = total_duration / total_amount # Minuten pro Stück
+        result.append(
+            {
+                "step_order": step_order,
+                "average": average
+            }
+        )
+    return result
