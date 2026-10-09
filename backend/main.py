@@ -1,11 +1,11 @@
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from sqlalchemy import func
+from sqlalchemy import func, literal_column
 import models
 from database import get_db
 from models import Orders, Process, ProcessStep
-from schemas import OrdersCreate, OrdersOut, ProcessCreate, ProcessOut, ProcessStepCreate, ProcessStepOut, averageStepOut
+from schemas import OrdersCreate, OrdersOut, ProcessCreate, ProcessOut, ProcessStepCreate, ProcessStepOut, WeeklySummary, averageStepOut
 
 app = FastAPI()
 
@@ -89,11 +89,93 @@ def get_average_step_time_per_step(db: Session = Depends(get_db)):
     for step_order, total_duration, total_amount in information:
         average = 0
         if total_amount:
-            average = round((total_duration / total_amount),2) # Minuten pro Stück
+            average = round((total_duration / total_amount),0) # Minuten pro Stück
         result.append(
             {
                 "step_order": step_order,
                 "average": average
             }
+        )
+    return result
+
+
+def weekly_adapter(db : Session):
+    week_trunc = func.date_trunc('week', Process.produced_at)
+    information = db.query(week_trunc, func.sum(Process.amount)).join(ProcessStep).where(
+        ProcessStep.is_last == True).group_by(week_trunc).all()
+
+    result = []
+    for week, total_amount in information:
+        result.append(
+            {
+                "week": week.date(),
+                "total_amount": total_amount
+            }
+        )
+    return result
+
+
+def weekly_ordered(db: Session):
+    week_trunc = func.date_trunc('week', Orders.created_at)
+    information = db.query(week_trunc, func.sum(Orders.ordered_amount)).group_by(week_trunc).all()
+
+    result = []
+
+    for week, total_amount in information:
+        result.append(
+            {
+                "week": week.date(),
+                "total_amount": total_amount
+            }
+        )
+    return result
+
+
+def weekly_duration(db : Session):
+    week_trunc = func.date_trunc('week',Process.produced_at)
+    information = db.query(week_trunc, func.sum(Process.duration)).group_by(week_trunc).all()
+
+    result = []
+
+    for week, duration in information:
+        result.append(
+            {
+                "week": week.date(),
+                "duration": duration 
+            }
+        )
+
+    return result
+
+@app.get("/summary_week", response_model=list[WeeklySummary])
+def get_weekly_summary(db : Session = Depends(get_db)):
+    adapters = weekly_adapter(db)
+    ordered = weekly_ordered(db)
+    durations = weekly_duration(db)
+
+    summary = {}
+    
+    for item in adapters:
+        entry = summary.setdefault(item["week"], {"produced": 0, "ordered": 0, "duration": 0})
+        entry["produced"] = item["total_amount"]
+
+    for item in ordered:
+        entry = summary.setdefault(item["week"], {"produced": 0, "ordered": 0, "duration": 0})
+        entry["ordered"] = item["total_amount"]
+
+    for item in durations:
+        entry = summary.setdefault(item["week"], {"produced": 0, "ordered": 0, "duration": 0})
+        entry["duration"] = item["duration"]
+        
+
+    result = []
+
+    for item in sorted(summary.keys()):
+        result.append( {
+            "week": item,
+            "produced": summary[item]["produced"],
+            "ordered": summary[item]["ordered"],
+            "duration": summary[item]["duration"]
+        }
         )
     return result

@@ -1,6 +1,9 @@
 import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Evaluation, OrdersCreate, OrdersType } from '../models/orders-schema';
+import { Process } from './process';
+import { Summary } from './summary';
+import { API_BASE_URL } from '../api.config';
 
 @Injectable({
     providedIn: 'root'
@@ -8,14 +11,18 @@ import { Evaluation, OrdersCreate, OrdersType } from '../models/orders-schema';
 
 export class Orders {
     private readonly http = inject(HttpClient)
-    private readonly orderUrl = "http://127.0.0.1:8000/orders"
-    private readonly evalUrl = "http://127.0.0.1:8000/evaluation"
+    private readonly summary = inject(Summary)
+    private readonly orderUrl = `${API_BASE_URL}/orders`
+    private readonly evalUrl = `${API_BASE_URL}/evaluation`
 
     createOrders(newOrders: OrdersType){
         const validData = OrdersCreate.parse(newOrders)
 
         this.http.post(this.orderUrl, validData).subscribe({
-            next: () => this.evalRessource.reload()
+            next: () => {
+                this.evalRessource.reload()
+                this.summary.weeklySummaryData.reload()
+            }
         })
     }
 

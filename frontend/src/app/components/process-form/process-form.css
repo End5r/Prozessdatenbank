@@ -38,6 +38,11 @@
     min-width: 0;
   }
 
+  .date-field {
+    flex: 1.6;
+    min-width: 180px;
+  }
+
   .submit-btn {
     height: 56px;
     padding: 0 1.5rem;
